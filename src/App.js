@@ -1,23 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
+import { useEffect, useState } from "react";
+
+const width = 8;
+const candyColors = [
+   'blue',
+   'green',
+   'orange',
+   'purple',
+   'red',
+   'yellow',
+    
+]
+
+const App = () => {
+  const [currentColorArragement, setCurrentColorArragement] = useState([]);
+
+  const createBoard = () => {
+    const randomColorArrangement = []
+    for(let i=0; i<width*width; i++){
+      const randomColor = candyColors[Math.floor(Math.random()*candyColors.length)];
+      randomColorArrangement.push(randomColor);
+    }
+    setCurrentColorArragement(randomColorArrangement);    
+  }
+
+  useEffect( () => {
+    createBoard()
+  }, [])
+
+  console.log(currentColorArragement);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          WELCOME<code>-----</code> TO.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Candy Crush
-        </a>
-      </header>
+    <div>
+
+    <div className="app">
+      <div className = "game">
+        {currentColorArragement.map((candyColor, index) =>(
+          <img 
+            key={index}
+            style={{backgroundColor: candyColor}}
+          />
+        ))}
+      </div>
+    </div>
     </div>
   );
 }
